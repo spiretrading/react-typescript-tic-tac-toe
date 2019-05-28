@@ -93,15 +93,11 @@ class Board extends React.Component<{}, BoardState> {
     const piece = lastPiece;
     var pathList = boardMap[index];
     var result: boolean;
-    console.log(piece);
     for(let i = 0; i < pathList.length; i++) {
       result = true;
-      console.log(pathList[i]);
       for(let j = 0; j < pathList[i].length; j++) {
-        console.log(this.state.cellContents[pathList[i][j]], piece, result);
         result = (this.state.cellContents[pathList[i][j]] === piece) && result;
       }
-      console.log(result);
       if(result) {
         return true;
       }
@@ -132,9 +128,7 @@ class Board extends React.Component<{}, BoardState> {
         lastPiece: newCell,
         cellContents: newContents
       });
-      console.log(index, newCell, this.isOver(index, newCell));
-      const result = this.isOver(index, newCell);
-      if(result) {
+      if(this.isOver(index, newCell)) {
         this.setState({ mode: Mode.GAME_OVER });
       }
     }
