@@ -159,35 +159,30 @@ class Board extends React.Component<{}, BoardState> {
   public render(): JSX.Element {
     if(this.state.mode === Mode.PLAY) {
       return (
-        <div>
-          <div style={Board.FLEX_ROW_OUTER_CONTAINER_STYLE}>
-            <h1>Two Player Tic Tac Toe</h1>
+        <div style={Board.FLEX_ROW_OUTER_CONTAINER_STYLE}>
+          <div style={Board.FLEX_COLUMN_CONTAINER_STYLE}>
+            <Cell piece={this.state.cellContents[0]} onClick={
+              () => this.onClick(0)}/>
+            <Cell piece={this.state.cellContents[1]} onClick={
+              () => this.onClick(1)}/>
+            <Cell piece={this.state.cellContents[2]} onClick={
+              () => this.onClick(2)}/>
           </div>
-          <div style={Board.FLEX_ROW_OUTER_CONTAINER_STYLE}>
-            <div style={Board.FLEX_COLUMN_CONTAINER_STYLE}>
-              <Cell piece={this.state.cellContents[0]} onClick={
-                () => this.onClick(0)}/>
-              <Cell piece={this.state.cellContents[1]} onClick={
-                () => this.onClick(1)}/>
-              <Cell piece={this.state.cellContents[2]} onClick={
-                () => this.onClick(2)}/>
-            </div>
-            <div style={Board.FLEX_COLUMN_CONTAINER_STYLE}>
-              <Cell piece={this.state.cellContents[3]} onClick={
-                () => this.onClick(3)}/>
-              <Cell piece={this.state.cellContents[4]} onClick={
-                () => this.onClick(4)}/>
-              <Cell piece={this.state.cellContents[5]} onClick={
-                () => this.onClick(5)}/>
-            </div>
-            <div style={Board.FLEX_COLUMN_CONTAINER_STYLE}>
-              <Cell piece={this.state.cellContents[6]} onClick={
-                () => this.onClick(6)}/>
-              <Cell piece={this.state.cellContents[7]} onClick={
-                () => this.onClick(7)}/>
-              <Cell piece={this.state.cellContents[8]} onClick={
-                () => this.onClick(8)}/>
-            </div>
+          <div style={Board.FLEX_COLUMN_CONTAINER_STYLE}>
+            <Cell piece={this.state.cellContents[3]} onClick={
+              () => this.onClick(3)}/>
+            <Cell piece={this.state.cellContents[4]} onClick={
+              () => this.onClick(4)}/>
+            <Cell piece={this.state.cellContents[5]} onClick={
+              () => this.onClick(5)}/>
+          </div>
+          <div style={Board.FLEX_COLUMN_CONTAINER_STYLE}>
+            <Cell piece={this.state.cellContents[6]} onClick={
+              () => this.onClick(6)}/>
+            <Cell piece={this.state.cellContents[7]} onClick={
+              () => this.onClick(7)}/>
+            <Cell piece={this.state.cellContents[8]} onClick={
+              () => this.onClick(8)}/>
           </div>
         </div>);
     } else if(this.state.mode === Mode.GAME_OVER) {
@@ -199,8 +194,7 @@ class Board extends React.Component<{}, BoardState> {
         }
       })();
       return (
-        <div style={Board.FLEX_COLUMN_OVER_STYLE} onClick={
-            () => this.reStart()}>
+        <div style={Board.FLEX_COLUMN_OVER_STYLE} onClick={this.reStart}>
           <div style={Board.FLEX_ROW_STYLE}>
             <p style={Board.FONT_STYLE}>{text}</p>
           </div>
@@ -210,8 +204,7 @@ class Board extends React.Component<{}, BoardState> {
         </div>);
     } else {
       return (
-        <div style={Board.FLEX_COLUMN_OVER_STYLE} onClick={
-            () => this.reStart()}>
+        <div style={Board.FLEX_COLUMN_OVER_STYLE} onClick={this.reStart}>
           <div style={Board.FLEX_ROW_STYLE}>
             <p style={Board.FONT_STYLE}>X O</p>
           </div>
@@ -277,9 +270,13 @@ class Board extends React.Component<{}, BoardState> {
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Board/>
-    </div>
-  );
+      <div>
+        <h1>Two Player Tic Tac Toe</h1>
+      </div>
+      <div>
+        <Board/>
+      </div>
+    </div>);
 }
 
 export default App;
