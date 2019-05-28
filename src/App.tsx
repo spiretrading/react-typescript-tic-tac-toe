@@ -3,7 +3,8 @@ import './App.css';
 
 enum Mode {
   PLAY,
-  GAME_OVER
+  GAME_OVER,
+  DRAW
 }
 
 export enum Piece {
@@ -87,6 +88,16 @@ class Board extends React.Component<{}, BoardState> {
     this.onClick = this.onClick.bind(this);
     this.isOver = this.isOver.bind(this);
     this.reStart = this.reStart.bind(this);
+    this.isFull = this.isFull.bind(this);
+  }
+
+  private isFull(contentList: Piece[]) {
+    for(var i = 0; i < contentList.length; i++) {
+      if(contentList[i] === Piece.NONE) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private isOver(index: number, lastPiece: Piece) {
@@ -130,6 +141,8 @@ class Board extends React.Component<{}, BoardState> {
       });
       if(this.isOver(index, newCell)) {
         this.setState({ mode: Mode.GAME_OVER });
+      } else if(this.isFull(newContents)) {
+        this.setState({ mode: Mode.DRAW });
       }
     }
   }
@@ -177,7 +190,7 @@ class Board extends React.Component<{}, BoardState> {
             </div>
           </div>
         </div>);
-    } else {
+    } else if(this.state.mode === Mode.GAME_OVER) {
       const text = (() => {
         if(this.state.lastPiece === Piece.O) {
           return 'O';
@@ -194,8 +207,18 @@ class Board extends React.Component<{}, BoardState> {
           <div style={Board.FLEX_ROW_STYLE}>
             <p style={Board.FONT_STYLE}>WINNER!</p>
           </div>
-        </div>
-      );
+        </div>);
+    } else {
+      return (
+        <div style={Board.FLEX_COLUMN_OVER_STYLE} onClick={
+            () => this.reStart()}>
+          <div style={Board.FLEX_ROW_STYLE}>
+            <p style={Board.FONT_STYLE}>X O</p>
+          </div>
+          <div style={Board.FLEX_ROW_STYLE}>
+            <p style={Board.FONT_STYLE}>DRAW!</p>
+          </div>
+        </div>);
     }
   }
 
@@ -235,8 +258,7 @@ class Board extends React.Component<{}, BoardState> {
     flexDirection: 'row' as 'row',
     justifyContent: 'center' as 'center',
     alignItems: 'center' as 'center',
-    width: '100%',
-    //height: '100%'
+    width: '100%'
   }
 
   private static readonly FONT_STYLE = {
